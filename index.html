@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CampusConnect · Smart College Companion</title>
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <!-- Google Fonts (Inter) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f4f7fc;
+      color: #1e293b;
+      transition: background 0.3s, color 0.3s;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      cursor: default;
+    }
+
+    body.dark {
+      background: #0f172a;
+      color: #e2e8f0;
+    }
+
+    a, button, .btn, input, select, textarea, .nav-links a {
+      cursor: pointer;
+    }
+
+    input, select, textarea {
+      cursor: text;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 28px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+    }
+
+    body.dark .glass {
+      background: rgba(30, 41, 59, 0.6);
+      border-color: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 24px;
+      padding: 1.5rem 1.8rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.02);
+    }
+
+    body.dark .card {
+      background: rgba(30, 41, 59, 0.5);
+      border-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
+    }
+
+    .btn {
+      background: #3b82f6;
+      border: none;
+      padding: 0.7rem 1.6rem;
+      border-radius: 60px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: #ffffff !important;
+      cursor: pointer !important;
+      transition: 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 8px 18px rgba(59, 130, 246, 0.2);
+    }
+
+    .btn:hover {
+      background: #2563eb;
+      transform: scale(0.97);
+      box-shadow: 0 12px 24px rgba(59, 130, 246, 0.3);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1.5px solid #3b82f6;
+      color: #3b82f6 !important;
+      box-shadow: none;
+    }
+
+    .btn-outline:hover {
+      background: #3b82f6;
+      color: #ffffff !important;
+    }
+
+    .btn-danger {
+      background: #ef4444;
+      color: #ffffff !important;
+      box-shadow: 0 8px 18px rgba(239, 68, 68, 0.2);
+    }
+
+    .btn-danger:hover {
+      background: #dc2626;
+      color: #ffffff !important;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 0.8rem 1.2rem;
+      border-radius: 60px;
+      border: 1.5px solid rgba(0, 0, 0, 0.06);
+      background: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(4px);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      transition: 0.2s;
+      outline: none;
+      color: #1e293b;
+    }
+
+    body.dark input, body.dark select, body.dark textarea {
+      background: rgba(30, 41, 59, 0.5);
+      border-color: rgba(255, 255, 255, 0.08);
+      color: #e2e8f0;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 0;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 1.6rem;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .nav-links a {
+      padding: 0.4rem 1rem;
+      border-radius: 40px;
+      font-weight: 500;
+      transition: 0.2s;
+      cursor: pointer !important;
+      color: #1e293b;
+    }
+
+    body.dark .nav-links a {
+      color: #e2e8f0;
+    }
+
+    .nav-links a:hover {
+      background: rgba(59, 130, 246, 0.1);
+    }
+
+    body.dark .nav-links a:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .hero {
+      padding: 4rem 0 6rem;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 3.8rem;
+      font-weight: 700;
+      letter-spacing: -1px;
+      line-height: 1.1;
+      max-width: 800px;
+      margin: 0 auto 1rem;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      opacity: 0.7;
+      max-width: 600px;
+      margin: 0 auto 2.5rem;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.8rem;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+
+    #toast-container {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      max-width: 380px;
+      width: 100%;
+    }
+
+    .toast {
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(12px);
+      color: #fff;
+      padding: 1rem 1.5rem;
+      border-radius: 60px;
+      font-weight: 500;
+      font-size: 0.9rem;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+      animation: slideUp 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .toast.success { border-left: 5px solid #22c55e; }
+    .toast.error { border-left: 5px solid #ef4444; }
+    .toast.info { border-left: 5px solid #3b82f6; }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 4px solid rgba(59, 130, 246, 0.15);
+      border-top-color: #3b82f6;
+      animation: spin 0.8s linear infinite;
+      margin: 2rem auto;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    @media (max-width: 992px) {
+      .grid-3 { grid-template-columns: 1fr 1fr; }
+      .grid-4 { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .grid-2 { grid-template-columns: 1fr; }
+      .grid-3 { grid-template-columns: 1fr; }
+      .grid-4 { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 2.4rem; }
+      .navbar { flex-direction: column; align-items: stretch; }
+      .nav-links { justify-content: center; }
+    }
+
+    .page {
+      display: none;
+      padding: 2rem 0 4rem;
+    }
+
+    .page.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 1.8rem;
+      letter-spacing: -0.3px;
+    }
+
+    .stat-number {
+      font-size: 2.6rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .flex-between { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .gap-1 { gap: 1rem; }
+    .mt-2 { margin-top: 2rem; }
+    .mb-1 { margin-bottom: 1rem; }
+    .text-center { text-align: center; }
+    .w-full { width: 100%; }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 26px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: #ccc;
+      transition: .4s;
+      border-radius: 34px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 4px;
+      bottom: 4px;
+      background: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+      background: #3b82f6;
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(24px);
+    }
+
+    .hero .btn {
+      color: #ffffff !important;
+    }
+
+    .hero .btn-outline {
+      color: #3b82f6 !important;
+      background: rgba(255,255,255,0.9);
+    }
+
+    .hero .btn-outline:hover {
+      color: #ffffff !important;
+      background: #3b82f6;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="toast-container"></div>
+
+  <header class="container">
+    <nav class="navbar">
+      <span class="logo"><i class="fas fa-graduation-cap" style="background: none; -webkit-text-fill-color: #3b82f6; margin-right: 6px;"></i>CampusConnect</span>
+      <div class="nav-links" id="navLinks">
+        <a href="#" data-page="landing"><i class="fas fa-home"></i> Home</a>
+        <a href="#" data-page="dashboard"><i class="fas fa-chart-pie"></i> Dashboard</a>
+        <a href="#" data-page="lostfound"><i class="fas fa-search"></i> Lost & Found</a>
+        <a href="#" data-page="events"><i class="fas fa-calendar"></i> Events</a>
+        <a href="#" data-page="clubs"><i class="fas fa-users"></i> Clubs</a>
+        <a href="#" data-page="notes"><i class="fas fa-sticky-note"></i> Notes</a>
+        <a href="#" data-page="timetable"><i class="fas fa-clock"></i> Timetable</a>
+        <a href="#" data-page="profile"><i class="fas fa-user"></i> Profile</a>
+        <a href="#" data-page="settings"><i class="fas fa-cog"></i> Settings</a>
+        <a href="#" id="authBtn" class="btn btn-outline" style="padding: 0.4rem 1.2rem;"><i class="fas fa-sign-in-alt"></i> Login</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container">
+
+    <section id="page-landing" class="page active">
+      <div class="hero">
+        <h1>Your Smart <br>College Companion</h1>
+        <p>Manage lost items, events, clubs, notes, timetable, and more — all in one place.</p>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+          <a href="#" class="btn" data-page="register"><i class="fas fa-user-plus"></i> Get Started</a>
+          <a href="#" class="btn btn-outline" data-page="login"><i class="fas fa-sign-in-alt"></i> Sign In</a>
+        </div>
+      </div>
+      <div class="grid-3">
+        <div class="card text-center"><i class="fas fa-box" style="font-size: 2.4rem; color: #3b82f6;"></i><h3>Lost & Found</h3><p>Report or find lost items on campus.</p></div>
+        <div class="card text-center"><i class="fas fa-calendar-alt" style="font-size: 2.4rem; color: #8b5cf6;"></i><h3>Events</h3><p>Discover and register for campus events.</p></div>
+        <div class="card text-center"><i class="fas fa-users" style="font-size: 2.4rem; color: #22c55e;"></i><h3>Clubs</h3><p>Join clubs and register for activities.</p></div>
+      </div>
+    </section>
+
+    <section id="page-dashboard" class="page">
+      <h2 class="section-title"><i class="fas fa-chart-pie"></i> Dashboard</h2>
+      <div class="grid-4" id="dashboardStats">
+        <div class="card"><span class="stat-number" id="statLost">0</span><p>Lost Items</p></div>
+        <div class="card"><span class="stat-number" id="statEvents">0</span><p>Events</p></div>
+        <div class="card"><span class="stat-number" id="statClubs">0</span><p>Clubs</p></div>
+        <div class="card"><span class="stat-number" id="statNotes">0</span><p>Notes</p></div>
+      </div>
+      <div class="card mt-2"><i class="fas fa-bolt" style="color: #3b82f6;"></i> Welcome back, <span id="dashboardUser">Student</span>! Here's your campus snapshot.</div>
+    </section>
+
+    <section id="page-lostfound" class="page">
+      <div class="flex-between"><h2 class="section-title"><i class="fas fa-search"></i> Lost & Found</h2><button class="btn" id="addLostBtn"><i class="fas fa-plus"></i> Report Item</button></div>
+      <div class="flex-between gap-1 mb-1"><input type="text" id="lostSearch" placeholder="Search lost items..." style="max-width: 300px;"><select id="lostCategory"><option value="">All Categories</option><option value="electronics">Electronics</option><option value="books">Books</option><option value="clothing">Clothing</option><option value="other">Other</option></select></div>
+      <div id="lostList" class="grid-3"></div>
+      <div id="lostEmpty" class="text-center" style="padding: 3rem 0; opacity:0.6;"><i class="fas fa-box-open" style="font-size: 3rem;"></i><p>No lost items reported yet.</p></div>
+    </section>
+
+    <section id="page-events" class="page">
+      <div class="flex-between"><h2 class="section-title"><i class="fas fa-calendar"></i> Events</h2><button class="btn" id="addEventBtn"><i class="fas fa-plus"></i> Add Event</button></div>
+      <div id="eventList" class="grid-3"></div>
+      <div id="eventEmpty" class="text-center" style="padding: 3rem 0; opacity:0.6;"><i class="fas fa-calendar-times" style="font-size: 3rem;"></i><p>No events scheduled.</p></div>
+    </section>
+
+    <section id="page-clubs" class="page">
+      <div class="flex-between"><h2 class="section-title"><i class="fas fa-users"></i> Clubs</h2><button class="btn" id="addClubBtn"><i class="fas fa-plus"></i> Register Club</button></div>
+      <div id="clubList" class="grid-3"></div>
+      <div id="clubEmpty" class="text-center" style="padding: 3rem 0; opacity:0.6;"><i class="fas fa-users-slash" style="font-size: 3rem;"></i><p>No clubs registered yet.</p></div>
+    </section>
+
+    <section id="page-notes" class="page">
+      <div class="flex-between"><h2 class="section-title"><i class="fas fa-sticky-note"></i> Notes</h2><button class="btn" id="addNoteBtn"><i class="fas fa-plus"></i> New Note</button></div>
+      <div id="noteList" class="grid-3"></div>
+      <div id="noteEmpty" class="text-center" style="padding: 3rem 0; opacity:0.6;"><i class="fas fa-file-alt" style="font-size: 3rem;"></i><p>No notes shared.</p></div>
+    </section>
+
+    <section id="page-timetable" class="page">
+      <h2 class="section-title"><i class="fas fa-clock"></i> Timetable</h2>
+      <div id="timetableContainer" class="card"><p>Your timetable will appear here. (Add entries via Firestore)</p></div>
+    </section>
+
+    <section id="page-profile" class="page">
+      <h2 class="section-title"><i class="fas fa-user"></i> Profile</h2>
+      <div class="card" style="max-width: 500px;">
+        <p><strong>Name:</strong> <span id="profileName">Student</span></p>
+        <p><strong>Email:</strong> <span id="profileEmail">student@campus.com</span></p>
+        <p><strong>UID:</strong> <span id="profileUid">—</span></p>
+        <button class="btn btn-danger mt-2" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+      </div>
+    </section>
+
+    <section id="page-settings" class="page">
+      <h2 class="section-title"><i class="fas fa-cog"></i> Settings</h2>
+      <div class="card" style="max-width: 500px;">
+        <div class="flex-between"><span><i class="fas fa-moon"></i> Dark Mode</span><label class="switch"><input type="checkbox" id="darkModeToggle"><span class="slider round"></span></label></div>
+        <hr style="margin: 1.5rem 0; opacity:0.1;">
+        <button class="btn btn-danger" id="deleteAccountBtn"><i class="fas fa-trash"></i> Delete Account</button>
+      </div>
+    </section>
+
+    <section id="page-login" class="page">
+      <div class="card" style="max-width: 420px; margin: 2rem auto;">
+        <h2><i class="fas fa-sign-in-alt"></i> Login</h2>
+        <input type="email" id="loginEmail" placeholder="Email" class="mb-1"><br>
+        <input type="password" id="loginPassword" placeholder="Password" class="mb-1"><br>
+        <button class="btn w-full" id="loginBtn"><i class="fas fa-arrow-right"></i> Login</button>
+        <p class="text-center mt-2">Don't have an account? <a href="#" data-page="register" style="color:#3b82f6;">Register</a></p>
+      </div>
+    </section>
+
+    <section id="page-register" class="page">
+      <div class="card" style="max-width: 420px; margin: 2rem auto;">
+        <h2><i class="fas fa-user-plus"></i> Register</h2>
+        <input type="text" id="regName" placeholder="Full Name" class="mb-1"><br>
+        <input type="email" id="regEmail" placeholder="Email" class="mb-1"><br>
+        <input type="password" id="regPassword" placeholder="Password" class="mb-1"><br>
+        <button class="btn w-full" id="registerBtn"><i class="fas fa-user-check"></i> Create Account</button>
+        <p class="text-center mt-2">Already have an account? <a href="#" data-page="login" style="color:#3b82f6;">Login</a></p>
+      </div>
+    </section>
+
+  </main>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, deleteUser, updateProfile } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+    import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyB6pzQzGBWU62JTeLnCo768Wdi6UKOc30c",
+      authDomain: "campusconnect-cf4ef.firebaseapp.com",
+      projectId: "campusconnect-cf4ef",
+      storageBucket: "campusconnect-cf4ef.firebasestorage.app",
+      messagingSenderId: "730390092532",
+      appId: "1:730390092532:web:7117f9c68eb34c197e1ca1"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const $ = (id) => document.getElementById(id);
+    const pages = document.querySelectorAll('.page');
+    const navLinks = document.querySelectorAll('[data-page]');
+    const toastContainer = $('toast-container');
+
+    function showToast(message, type = 'info') {
+      const t = document.createElement('div');
+      t.className = `toast ${type}`;
+      t.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i> ${message}`;
+      toastContainer.appendChild(t);
+      setTimeout(() => t.remove(), 3000);
+    }
+
+    function navigate(pageId) {
+      pages.forEach(p => p.classList.remove('active'));
+      const target = document.getElementById(`page-${pageId}`);
+      if (target) target.classList.add('active');
+      navLinks.forEach(a => a.style.background = 'transparent');
+      document.querySelector(`[data-page="${pageId}"]`)?.style.setProperty('background', 'rgba(59,130,246,0.12)');
+    }
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const page = link.dataset.page;
+        if (page === 'login' || page === 'register') {
+          if (auth.currentUser) { showToast('Already logged in', 'info'); return; }
+        }
+        navigate(page);
+      });
+    });
+
+    onAuthStateChanged(auth, (user) => {
+      const authBtn = $('authBtn');
+      if (user) {
+        authBtn.innerHTML = `<i class="fas fa-user"></i> ${user.displayName || 'User'}`;
+        authBtn.dataset.page = 'profile';
+        $('profileName').textContent = user.displayName || 'Student';
+        $('profileEmail').textContent = user.email;
+        $('profileUid').textContent = user.uid;
+        $('dashboardUser').textContent = user.displayName || 'Student';
+        loadAllData();
+        if (document.querySelector('.page.active')?.id === 'page-landing') navigate('dashboard');
+      } else {
+        authBtn.innerHTML = `<i class="fas fa-sign-in-alt"></i> Login`;
+        authBtn.dataset.page = 'login';
+        navigate('landing');
+        ['lostList','eventList','clubList','noteList'].forEach(id => $(id).innerHTML = '');
+        updateStats(0,0,0,0);
+      }
+    });
+
+    $('loginBtn')?.addEventListener('click', async () => {
+      const email = $('loginEmail').value;
+      const pass = $('loginPassword').value;
+      if (!email || !pass) { showToast('Please fill all fields', 'error'); return; }
+      try {
+        await signInWithEmailAndPassword(auth, email, pass);
+        showToast('Logged in!', 'success');
+        navigate('dashboard');
+      } catch (e) {
+        showToast(e.message, 'error');
+      }
+    });
+
+    $('registerBtn')?.addEventListener('click', async () => {
+      const name = $('regName').value;
+      const email = $('regEmail').value;
+      const pass = $('regPassword').value;
+      if (!name || !email || !pass) { showToast('Please fill all fields', 'error'); return; }
+      try {
+        const cred = await createUserWithEmailAndPassword(auth, email, pass);
+        await updateProfile(cred.user, { displayName: name });
+        await setDoc(doc(db, 'users', cred.user.uid), { 
+          name: name, 
+          email: email, 
+          createdAt: new Date().toISOString(),
+          uid: cred.user.uid
+        });
+        showToast('Account created successfully!', 'success');
+        navigate('dashboard');
+      } catch (e) {
+        console.error('Registration error:', e);
+        showToast(e.message, 'error');
+      }
+    });
+
+    $('logoutBtn')?.addEventListener('click', async () => {
+      await signOut(auth);
+      showToast('Logged out', 'info');
+      navigate('landing');
+    });
+
+    async function addItem(collectionName, data) {
+      if (!auth.currentUser) { showToast('Please login', 'error'); return; }
+      try {
+        await addDoc(collection(db, collectionName), { 
+          ...data, 
+          userId: auth.currentUser.uid, 
+          createdAt: new Date().toISOString()
+        });
+        showToast('Added successfully!', 'success');
+        loadAllData();
+      } catch (e) {
+        showToast(e.message, 'error');
+      }
+    }
+
+    async function deleteItem(collectionName, id) {
+      try {
+        await deleteDoc(doc(db, collectionName, id));
+        loadAllData();
+        showToast('Deleted successfully', 'info');
+      } catch (e) {
+        showToast(e.message, 'error');
+      }
+    }
+
+    function renderLost(items) {
+      const container = $('lostList');
+      const empty = $('lostEmpty');
+      container.innerHTML = '';
+      if (!items.length) { empty.style.display = 'block'; return; }
+      empty.style.display = 'none';
+      items.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <h4>${item.title || 'Item'}</h4>
+          <p>${item.description || ''}</p>
+          <small>${item.category || 'other'}</small>
+          <button class="btn btn-danger" style="padding:0.3rem 0.8rem; font-size:0.7rem; margin-top:0.5rem;" data-id="${item.id}" data-col="lostItems">Delete</button>
+        `;
+        container.appendChild(card);
+      });
+      document.querySelectorAll('#lostList .btn-danger').forEach(btn => {
+        btn.addEventListener('click', () => deleteItem('lostItems', btn.dataset.id));
+      });
+    }
+
+    function renderEvents(items) {
+      const container = $('eventList');
+      const empty = $('eventEmpty');
+      container.innerHTML = '';
+      if (!items.length) { empty.style.display = 'block'; return; }
+      empty.style.display = 'none';
+      items.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <h4>${item.title}</h4>
+          <p>${item.date || ''} · ${item.location || ''}</p>
+          <button class="btn btn-danger" style="padding:0.3rem 0.8rem; font-size:0.7rem; margin-top:0.5rem;" data-id="${item.id}" data-col="events">Delete</button>
+        `;
+        container.appendChild(card);
+      });
+      document.querySelectorAll('#eventList .btn-danger').forEach(btn => {
+        btn.addEventListener('click', () => deleteItem('events', btn.dataset.id));
+      });
+    }
+
+    function renderClubs(items) {
+      const container = $('clubList');
+      const empty = $('clubEmpty');
+      container.innerHTML = '';
+      if (!items.length) { empty.style.display = 'block'; return; }
+      empty.style.display = 'none';
+      items.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <h4>${item.name}</h4>
+          <p>${item.description || ''}</p>
+          <button class="btn btn-danger" style="padding:0.3rem 0.8rem; font-size:0.7rem; margin-top:0.5rem;" data-id="${item.id}" data-col="clubs">Delete</button>
+        `;
+        container.appendChild(card);
+      });
+      document.querySelectorAll('#clubList .btn-danger').forEach(btn => {
+        btn.addEventListener('click', () => deleteItem('clubs', btn.dataset.id));
+      });
+    }
+
+    function renderNotes(items) {
+      const container = $('noteList');
+      const empty = $('noteEmpty');
+      container.innerHTML = '';
+      if (!items.length) { empty.style.display = 'block'; return; }
+      empty.style.display = 'none';
+      items.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <h4>${item.title}</h4>
+          <p>${item.content || ''}</p>
+          <button class="btn btn-danger" style="padding:0.3rem 0.8rem; font-size:0.7rem; margin-top:0.5rem;" data-id="${item.id}" data-col="notes">Delete</button>
+        `;
+        container.appendChild(card);
+      });
+      document.querySelectorAll('#noteList .btn-danger').forEach(btn => {
+        btn.addEventListener('click', () => deleteItem('notes', btn.dataset.id));
+      });
+    }
+
+    function updateStats(lost, events, clubs, notes) {
+      $('statLost').textContent = lost;
+      $('statEvents').textContent = events;
+      $('statClubs').textContent = clubs;
+      $('statNotes').textContent = notes;
+    }
+
+    async function loadAllData() {
+      if (!auth.currentUser) return;
+      try {
+        const [lostSnap, eventSnap, clubSnap, noteSnap] = await Promise.all([
+          getDocs(collection(db, 'lostItems')),
+          getDocs(collection(db, 'events')),
+          getDocs(collection(db, 'clubs')),
+          getDocs(collection(db, 'notes'))
+        ]);
+        const lost = lostSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+        const events = eventSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+        const clubs = clubSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+        const notes = noteSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+        renderLost(lost);
+        renderEvents(events);
+        renderClubs(clubs);
+        renderNotes(notes);
+        updateStats(lost.length, events.length, clubs.length, notes.length);
+      } catch (e) {
+        showToast(e.message, 'error');
+      }
+    }
+
+    $('addLostBtn')?.addEventListener('click', () => {
+      const title = prompt('Item title:');
+      if (!title) return;
+      const desc = prompt('Description:');
+      const cat = prompt('Category (electronics/books/clothing/other):') || 'other';
+      addItem('lostItems', { title, description: desc, category: cat });
+    });
+
+    $('addEventBtn')?.addEventListener('click', () => {
+      const title = prompt('Event title:');
+      if (!title) return;
+      const date = prompt('Date (e.g. 2026-07-15):');
+      const location = prompt('Location:');
+      addItem('events', { title, date, location });
+    });
+
+    $('addClubBtn')?.addEventListener('click', () => {
+      const name = prompt('Club name:');
+      if (!name) return;
+      const desc = prompt('Description:');
+      addItem('clubs', { name, description: desc });
+    });
+
+    $('addNoteBtn')?.addEventListener('click', () => {
+      const title = prompt('Note title:');
+      if (!title) return;
+      const content = prompt('Content:');
+      addItem('notes', { title, content });
+    });
+
+    const darkToggle = $('darkModeToggle');
+    darkToggle?.addEventListener('change', () => {
+      document.body.classList.toggle('dark');
+      localStorage.setItem('darkMode', document.body.classList.contains('dark'));
+    });
+    if (localStorage.getItem('darkMode') === 'true') {
+      document.body.classList.add('dark');
+      darkToggle.checked = true;
+    }
+
+    $('deleteAccountBtn')?.addEventListener('click', async () => {
+      if (!confirm('Delete your account permanently?')) return;
+      try {
+        await deleteUser(auth.currentUser);
+        showToast('Account deleted', 'info');
+        navigate('landing');
+      } catch (e) {
+        showToast(e.message, 'error');
+      }
+    });
+
+    $('lostSearch')?.addEventListener('input', (e) => {
+      const q = e.target.value.toLowerCase();
+      document.querySelectorAll('#lostList .card').forEach(card => {
+        const text = card.textContent.toLowerCase();
+        card.style.display = text.includes(q) ? '' : 'none';
+      });
+    });
+
+    $('lostCategory')?.addEventListener('change', (e) => {
+      const cat = e.target.value;
+      document.querySelectorAll('#lostList .card').forEach(card => {
+        const c = card.querySelector('small')?.textContent || '';
+        card.style.display = (cat === '' || c === cat) ? '' : 'none';
+      });
+    });
+
+    navigate('landing');
+  </script>
+</body>
+</html>

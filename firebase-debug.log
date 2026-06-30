@@ -1,0 +1,36 @@
+[debug] [2026-06-30T08:04:03.541Z] ----------------------------------------------------------------------
+[debug] [2026-06-30T08:04:03.545Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Asus\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only hosting
+[debug] [2026-06-30T08:04:03.546Z] CLI Version:   15.22.3
+[debug] [2026-06-30T08:04:03.546Z] Platform:      win32
+[debug] [2026-06-30T08:04:03.546Z] Node Version:  v24.15.0
+[debug] [2026-06-30T08:04:03.546Z] Detected Agent: unknown
+[debug] [2026-06-30T08:04:03.547Z] Time:          Tue Jun 30 2026 13:34:03 GMT+0530 (India Standard Time)
+[debug] [2026-06-30T08:04:03.547Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-06-30T08:04:06.249Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-06-30T08:04:06.250Z] > authorizing via signed-in user (saniyalochan@gmail.com)
+[debug] [2026-06-30T08:04:06.250Z] [iam] checking project campusconnect-cf4ef for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2026-06-30T08:04:06.253Z] Checked if tokens are valid: false, expires at: 1782805058645
+[debug] [2026-06-30T08:04:06.253Z] Checked if tokens are valid: false, expires at: 1782805058645
+[debug] [2026-06-30T08:04:06.254Z] > refreshing access token with scopes: []
+[debug] [2026-06-30T08:04:06.258Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-06-30T08:04:06.259Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-06-30T08:04:06.539Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2026-06-30T08:04:06.539Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-06-30T08:04:06.562Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/campusconnect-cf4ef:testIamPermissions [none]
+[debug] [2026-06-30T08:04:06.563Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/campusconnect-cf4ef:testIamPermissions  x-goog-user-project=campusconnect-cf4ef
+[debug] [2026-06-30T08:04:06.563Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/campusconnect-cf4ef:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2026-06-30T08:04:08.073Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/campusconnect-cf4ef:testIamPermissions 200
+[debug] [2026-06-30T08:04:08.073Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/campusconnect-cf4ef:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2026-06-30T08:04:08.074Z] Checked if tokens are valid: true, expires at: 1782810245539
+[debug] [2026-06-30T08:04:08.075Z] Checked if tokens are valid: true, expires at: 1782810245539
+[debug] [2026-06-30T08:04:08.075Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/campusconnect-cf4ef [none]
+[debug] [2026-06-30T08:04:08.640Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/campusconnect-cf4ef 200
+[debug] [2026-06-30T08:04:08.640Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/campusconnect-cf4ef {"projectId":"campusconnect-cf4ef","projectNumber":"730390092532","displayName":"CampusConnect","name":"projects/campusconnect-cf4ef","resources":{"hostingSite":"campusconnect-cf4ef"},"state":"ACTIVE","labels":{"firebase":"enabled"},"etag":"1_74a99afa-ec3f-4b2b-9511-8ef517383ca6"}
+[info] 
+[info] === Deploying to 'campusconnect-cf4ef'...
+[info] 
+[info] i  deploying hosting 
+[debug] [2026-06-30T08:04:08.648Z] Checked if tokens are valid: true, expires at: 1782810245539
+[debug] [2026-06-30T08:04:08.648Z] Checked if tokens are valid: true, expires at: 1782810245539
+[debug] [2026-06-30T08:04:08.648Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/campusconnect-cf4ef/sites/campusconnect-cf4ef [none]
